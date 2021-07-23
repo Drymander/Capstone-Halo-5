@@ -1,9 +1,11 @@
 
+# df = recent_match_stats('Drymander', 0)
+
 import plotly.graph_objects as go
 # from plotly.subplots import make_subplots
 from plotly.subplots import make_subplots
 def compare_stat(df, column_name):
-
+    df = df.round(2)
     # Separate player and enemy teams
     df_player = df.loc[df['PlayerTeam'] == 'Player']
     df_enemy = df.loc[df['PlayerTeam'] == 'Enemy']
@@ -29,7 +31,7 @@ def compare_stat(df, column_name):
                 x=df_player[column_name],
                 y=df_player['Gamertag'],
                 orientation='h',
-                text=df_player[column_name].round(2),
+                text=df_player[column_name],
                 textposition='auto',
                 marker_color=player_color),
                     row=1, col=1)
@@ -40,12 +42,12 @@ def compare_stat(df, column_name):
                 x=df_enemy[column_name],
                 y=df_enemy['Gamertag'],
                 orientation='h',
-                text=df_enemy[column_name].round(2),
+                text=df_enemy[column_name],
                 textposition='auto',
                 marker_color=enemy_color),
                     row=2, col=1)
     fig.update_xaxes(range=[0, x_range], row=2, col=1)
-
+    fig.update_layout(title_text='test')
     return fig
 
-# compare_stat(df, 'TotalTimePlayed')
+# compare_stat(df, 'TotalHeadshots')
