@@ -312,6 +312,10 @@ def build_history_dataframe(player_history, variant_id, streamlit=False):
         # Modeling option - includes all features but does not yet calculate
         else:
             variant_dic['Gamertag'] = player_history['Results'][i]['Id']
+            variant_dic['TotalTimePlayed']= isodate.parse_duration(variant_stats['TotalTimePlayed']).total_seconds() / 3600
+            variant_dic['K/D'] = variant_stats['TotalKills'] / variant_stats['TotalDeaths']
+            variant_dic['Accuracy'] = variant_stats['TotalShotsLanded'] / variant_stats['TotalShotsFired']
+            variant_dic['WinRate'] = variant_stats['TotalGamesWon'] / variant_stats['TotalGamesLost']
             
             # Loop that appends all stats to variant dic
             for stat in stat_list[1:]:    
@@ -319,9 +323,29 @@ def build_history_dataframe(player_history, variant_id, streamlit=False):
             
             # Parsing ISO duration times
             variant_dic['TotalTimePlayed']= isodate.parse_duration(variant_stats['TotalTimePlayed']).total_seconds() / 3600
+            variant_dic['TotalPowerWeaponPossessionTime']= isodate.parse_duration(variant_stats['TotalPowerWeaponPossessionTime']).total_seconds() / 3600
+#             vdf = vdf.append(variant_dic, True)
+#             i += 1
+            
+            # Per game stats
+            per_game_stat_list = ['TotalKills', 'TotalHeadshots', 'TotalWeaponDamage', 
+                                  'TotalShotsFired', 'TotalShotsLanded', 'TotalMeleeKills', 
+                                  'TotalMeleeDamage', 'TotalAssassinations', 'TotalGroundPoundKills', 
+                                  'TotalGroundPoundDamage', 'TotalShoulderBashKills', 
+                                  'TotalShoulderBashDamage', 'TotalGrenadeDamage', 'TotalPowerWeaponKills', 
+                                  'TotalPowerWeaponDamage', 'TotalPowerWeaponGrabs', 
+                                  'TotalPowerWeaponPossessionTime', 'TotalDeaths', 'TotalAssists', 
+                                  'TotalGrenadeKills']
+            
+            for stat in per_game_stat_list:
+                per_game_stat_string = stat.replace('Total', '')
+                per_game_stat_string = f'{per_game_stat_string}PerGame'
+                variant_dic[per_game_stat_string] = variant_dic[stat] / variant_dic['TotalGamesCompleted']
+            
+            
             vdf = vdf.append(variant_dic, True)
             i += 1
-    
+            
     # Return the streamlit or modeling dataframe
     return vdf
     
@@ -449,10 +473,10 @@ st.title('Single Match Data')
 gamertag = st.text_input("Type in your Gamertag", 'Drymander')
 back_count = st.text_input("How many matches would you like to go back?  Enter 0 for most recent match.", 0)
 
-# df = recent_match_stats(gamertag, back_count=0)
+df = recent_match_stats(gamertag, back_count=back_count)
 # user_input = st.text_area("label goes here", 'Drymander')
 
-df = pd.read_csv('match.csv')
+# df = pd.read_csv('match.csv')
 
 ####################################### Dataframe
 
@@ -462,5 +486,5 @@ df = pd.read_csv('match.csv')
 
 st.header('Books Read')
 st.subheader('Books Read')
-fig = compare_stat(df, 'TotalTimePlayed')
+fig = compare_stat(df, 'K/D')
 st.plotly_chart(fig)
