@@ -196,6 +196,6 @@ For additional info, contact Johnny Dryman at [johnnydryman@gmail.com](mailto:jo
 ├── data
 ├── images
 ├── README.md
-├── Johnny Dryman - Phase 5 Project Presentation.pdf
+├── Johnny Dryman - Capstone Presentation.pdf
 └── Johnny Dryman - Phase 5 Project Notebook.ipynb
 ```
