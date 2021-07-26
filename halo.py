@@ -29,15 +29,15 @@ from plotly.subplots import make_subplots
 ###################################### Pickle files
 
 # Loading GameBaseVariantId metadata dictionary pulled from API
-with open('GameBaseVariantId.pkl', 'rb') as GameBaseVariantId_pickle:
+with open('data/GameBaseVariantId.pkl', 'rb') as GameBaseVariantId_pickle:
     GameBaseVariantId_dic = pickle.load(GameBaseVariantId_pickle)
 
 # Loading PlaylistId metadata dictionary pulled from API
-with open('PlaylistId_dic.pkl', 'rb') as PlaylistId_dic_pickle:
+with open('data/PlaylistId_dic.pkl', 'rb') as PlaylistId_dic_pickle:
     PlaylistId_dic = pickle.load(PlaylistId_dic_pickle)
 
 # Loading map_list metadata dictionary pulled from API
-with open('map_list.pkl', 'rb') as map_list_pickle:
+with open('data/map_list.pkl', 'rb') as map_list_pickle:
     map_list = pickle.load(map_list_pickle)
 
 
@@ -466,25 +466,200 @@ from compare_stat import compare_stat
 
 
 ######################################## Title
-st.title('Single Match Data')
+st.title('Welcome to Halo 5 Last Match!')
+st.markdown('Halo 5 Last Match allows you to view much more in depth stats for players in a recent Halo 5 Arena match. Start by entering your gamertag below. The second box will allow you to specify how many matches back you would like to go in your match history.  ')
+
+# add_selectbox = st.sidebar.selectbox(
+#     "How would you like to be contacted?",
+#     ("Email", "Home phone", "Mobile phone")
+# )
+
+# sideb = st.sidebar
+# check1 = sideb.button("Main Stats")
+# textbyuser = st.text_input("Enter some text")
+# if check1:
+#     st.info("Code is analyzing your text.")
+
+# gamertag = st.sidebar.text_input("Type in your Gamertag", 'Drymander')
+# st.sidebar.header("How many matches would you like to go back?")
+# back_count = st.sidebar.text_input("Enter 0 for most recent match, 1 to go 1 match back, 2 to go 2 matches back, etc.", 0)
+
+st.sidebar.title("Additional Stats")
+xp_stats = st.sidebar.button('XP / Time Played')
+win_loss_stats = st.sidebar.button('Total Wins / Losses')
+kd_stats = st.sidebar.button('K/D')
+accuracy_stats = st.sidebar.button('Accuracy')
+grenades = st.sidebar.button('Grenades')
+weapon_damage = st.sidebar.button('Weapon Damage')
+power_weapon_kills = st.sidebar.button('Power Weapon Kills')
+power_weapon_grabs = st.sidebar.button('Power Weapon Grabs')
+melee = st.sidebar.button('Melee')
+assassinations = st.sidebar.button('Assassinations')
+ground_pound = st.sidebar.button('Ground Pound')
+shoulder_bash = st.sidebar.button('Shoulder Bash')
+
+
 
 ########################################### Input
 
 gamertag = st.text_input("Type in your Gamertag", 'Drymander')
-back_count = st.text_input("How many matches would you like to go back?  Enter 0 for most recent match.", 0)
+back_count = st.text_input("How many matches would you like to go back?  Enter 0 for most recent match, 1 to go 1 match back, 2 to go 2 matches back, etc.", 0)
+
+st.markdown("Each stat is calculated by Game Base Variant (e.g. Slayer, Capture the Flag, Oddball, Strongholds, etc).  Below, you'll see Total Hours Played, Win Rate, and average K/D.")
+
+st.markdown("You can also find additional stats on the sidebar.")
 
 df = recent_match_stats(gamertag, back_count=back_count)
-# user_input = st.text_area("label goes here", 'Drymander')
-
 # df = pd.read_csv('match.csv')
 
-####################################### Dataframe
+####################################### Match modes, map, date
 
-# st.dataframe(df)
+df_outcome = df.loc[df['Gamertag'] == gamertag]
+
+gamebasevariantid = df_outcome['GameBaseVariantId'].iloc[0]
+playlistid = df_outcome['PlaylistId'].iloc[0]
+map_name = df_outcome['MapVariantId'].iloc[0]
+if df_outcome['Winner'].iloc[0] == 'Victory':
+    outcome = 'VICTORY'
+elif df_outcome['Winner'].iloc[0] == 'Defeat':
+    outcome = 'DEFEAT'
+else:
+    outcome = 'TIE'
+    
+st.header(f"Showing stats for {gamertag}'s match on {df_outcome['Date'].iloc[0]}")
+st.subheader(f'Outcome - {outcome}')
+st.subheader(f'Game Mode - {gamebasevariantid}')
+st.subheader(f'Playlist - {playlistid}')
+st.subheader(f'Map - {map_name}')
 
 ######################################### Graphs
 
-st.header('Books Read')
-st.subheader('Books Read')
-fig = compare_stat(df, 'K/D')
-st.plotly_chart(fig)
+gamebasevariantid = df['GameBaseVariantId'].iloc[0]
+
+def show_stat(column_name, df=df, gamebasevariantid=gamebasevariantid):
+    st.header(f'{column_name} - {gamebasevariantid}')
+    stat_plot = compare_stat(df, column_name)
+    st.plotly_chart(stat_plot)
+    
+if grenades:
+    
+    show_stat('GrenadeKillsPerGame')
+    show_stat('GrenadeDamagePerGame')
+    show_stat('TotalGrenadeKills')
+    show_stat('TotalGrenadeDamage')
+    
+if weapon_damage:
+    show_stat('WeaponDamagePerGame')
+    show_stat('TotalWeaponDamage')
+    show_stat('PowerWeaponDamagePerGame')
+    show_stat('TotalPowerWeaponDamage')
+
+if power_weapon_kills:
+    show_stat('PowerWeaponKillsPerGame')
+    show_stat('TotalPowerWeaponKills')
+
+if power_weapon_grabs:
+    show_stat('PowerWeaponGrabsPerGame')
+    show_stat('TotalPowerWeaponGrabs')
+    show_stat('PowerWeaponPossessionTimePerGame')
+    show_stat('TotalPowerWeaponPossessionTime')
+    
+if kd_stats:
+    show_stat('K/D')
+    show_stat('KillsPerGame')
+    show_stat('TotalKills')
+    show_stat('DeathsPerGame')
+    show_stat('TotalDeaths')
+    show_stat('AssistsPerGame')
+    show_stat('TotalAssists')
+    
+if accuracy_stats:
+    show_stat('Accuracy')
+    show_stat('HeadshotsPerGame')
+    show_stat('TotalHeadshots')
+    show_stat('ShotsFiredPerGame')
+    show_stat('ShotsLandedPerGame')
+    show_stat('TotalShotsLanded')
+    show_stat('TotalShotsFired')
+    
+if melee:
+    show_stat('MeleeKillsPerGame')
+    show_stat('TotalMeleeKills')
+    show_stat('MeleeDamagePerGame')
+    show_stat('TotalMeleeDamage')
+    
+if assassinations:
+    show_stat('AssassinationsPerGame')
+    show_stat('TotalAssassinations')
+
+if ground_pound:
+    show_stat('GroundPoundKillsPerGame')
+    show_stat('TotalGroundPoundKills')
+    show_stat('GroundPoundDamagePerGame')
+    show_stat('TotalGroundPoundDamage')
+
+if shoulder_bash:
+    show_stat('ShoulderBashKillsPerGame')
+    show_stat('TotalShoulderBashKills')
+    show_stat('ShoulderBashDamagePerGame')
+    show_stat('TotalShoulderBashDamage')
+    
+if xp_stats:
+    show_stat('SpartanRank')
+    show_stat('PrevTotalXP')
+    show_stat('TotalTimePlayed')
+
+if win_loss_stats:
+    show_stat('WinRate')
+    show_stat('TotalGamesWon')
+    show_stat('TotalGamesLost')
+    show_stat('TotalGamesTied')
+    show_stat('TotalGamesCompleted')
+
+else:
+
+    st.header(f'Total Hours Played - {gamebasevariantid}')
+    # st.subheader('Books Read')
+    totaltimeplayed = compare_stat(df, 'TotalTimePlayed')
+    st.plotly_chart(totaltimeplayed)
+
+    st.header(f'Win Rate - {gamebasevariantid}')
+    # st.subheader('Books Read')
+    winrate = compare_stat(df, 'WinRate')
+    st.plotly_chart(winrate)
+
+    st.header(f'K/D - {gamebasevariantid}')
+    # st.subheader('Books Read')
+    k_d = compare_stat(df, 'K/D')
+    st.plotly_chart(k_d)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
