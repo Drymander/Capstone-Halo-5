@@ -1,164 +1,201 @@
-# Phase 4 Project
 
-Final phase down -- you're absolutely crushing it! You've made it all the way through one of the toughest phase of this course. You must have an amazing brain in your head!
+  
+  
+ # Halo 5 - Recommendations for Improved Player Experience through Data Visualization and Machine Learning
 
-<img src='https://raw.githubusercontent.com/learn-co-curriculum/dsc-phase-4-project/main/images/brain.gif'>
+**Author**: [Johnny Dryman](mailto:johnnydryman@gmail.com)
 
-## Project Overview
+## What is Halo 5?
 
-For this phase, you will choose a project that requires building one of these four models:
+**Halo 5: Guardians** is a 2015 first-person shooter video game developed by 343 Industries and published by Microsoft Studios for the Xbox One.  One of the most popular features of Halo 5 is its Arena multiplayer mode, where two teams of 4 players compete in a variety of game modes.  
 
-- Time Series Modeling
-- Recommendation System
-- Image Classification with Deep Learning
-- Natural Language Processing
 
-### The Data
+# Introduction
 
-We have provided a dataset suitable to each model, but you are also encouraged to source your own dataset. If you choose your own dataset, **run the dataset and business problem by your instructor for approval** before starting your project.
+We all had our various ways of getting through the 2020 lockdown - something to keep in touch with people and feel sane.  For me and my friends, we got through it with Halo 5 - specifically their 'Super Fiesta' game mode.  
 
-### How to Choose a Project
+While we had all played Halo 5 for a short period when it first launched in 2015, we hadn't really touched it since.  Before I even started the data science program at Flatiron, I thought it must somehow be possible to get more data about the game, because my friends and I had a lot of questions we wanted answered.  To name a few that will be addressed in this project:
 
-When choosing a project, consider:
+- How well do we perform on different maps?
+- Is there a way to determine whether or not we're improving?
+- Why do we get destroyed some rounds and do great other rounds?  
 
-1. **Depth:** Choose a project that similar to what you want to do for your capstone project (Phase 5). This will allow you to practice those methods in a group setting before needing to use it independently. This will help you build a better Capstone project and a portfolio that demonstrates the ability to deeply learn and implement one modeling approach.
+It just so happens that Halo 5 has a very robust API with far more information than I was able to tackle with this project.  Nevertheless, I knew that I would finally be able to answer some questions that my friends and I have had for months.
 
-2. **Breadth:** Choose a problem that you don't necessarily plan to use in your capstone project. This will allow you to develop applied experience with multiple modeling approaches. This will help you refine your areas of interest and build a portfolio that demonstrates the ability to learn and implement multiple modeling approaches.
+# Business Problem
 
-If you are feeling overwhelmed or behind, we recommend you choose Problem \#3: Image Classification with Deep Learning.
+343 Industries is on the verge of releasing Halo Infinite, likely the most anticipated game of the decade so far.  The stakes are very high, not just for 343, but also for the millenials that grew up with the game.
 
-### Problem 1: Time Series Modeling
+It has been said that Halo Infinite will be a "10 year game," with regular updates and maintenance.  How can 343 keep players engaged for that length of time?  Creating a fun experience for players is obviously first and foremost, but based on the information I now know 343 tracks in Halo 5, I would argue that there is room for improved engagement through graphical analysis.  
 
-If you choose the Time Series option, you will be forecasting real estate prices of various zip codes using data from [Zillow Research](https://www.zillow.com/research/data/). For this project, you will be acting as a consultant for a fictional real-estate investment firm. The firm has asked you what seems like a simple question:
+Further, I believe that by providing more information to the player could position Halo Infinite to break into the 'core' (i.e. hyper competitive) gaming space.  The ability to tell a player they're improving, how well they do on certain maps - more information like this reveals the complexity of the game, and with improved knowledge could bring more engagment and more desire to not only play against others, but play against yourself by improving your own performance figures.
 
-> What are the top 5 best zip codes for us to invest in?
+## Data
 
-This may seem like a simple question at first glance, but there's more than a little ambiguity here that you'll have to think through in order to provide a solid recommendation. Should your recommendation be focused on profit margins only? What about risk? What sort of time horizon are you predicting against?  Your recommendation will need to detail your rationale and answer any sort of lingering questions like these in order to demonstrate how you define "best".
+This data was sourced using the Halo Public API (Beta).  The API is a rich source of data containing information not only about individual players but also about extensive match results.  By combining multiple API calls, we were able to source data to create interesting visuals depicting a player's performance improvement throughout their history and to build machine learning models predicting the outcome of a match using only historical player information.
 
-There are many datasets on the [Zillow Research Page](https://www.zillow.com/research/data/), and making sure you have exactly what you need can be a bit confusing. For simplicity's sake, we have already provided the dataset for you in this repo -- you will find it in the file `time-series/zillow_data.csv`.
+## Visualizations Depicting Player Performance
 
-The goal of this project is to have you complete a very common real-world task in regard to time series modeling. However, real world problems often come with a significant degree of ambiguity, which requires you to use your knowledge of statistics and data science to think critically about and answer. While the main task in this project is time series modeling, that isn't the overall goal -- it is important to understand that time series modeling is a tool in your toolbox, and the forecasts it provides you are what you'll use to answer important questions.
+### Wins, Losses, and Ties by Month
 
-In short, to pass this project, demonstrating the quality and thoughtfulness of your overall recommendation is at least as important as successfully building a time series model!
+With this graph, players can see their wins, losses, and ties for every month they have played.  This communicates a baseline performance improvement over time, and it's also interesting to see how much they have played each month.
 
-#### Starter Jupyter Notebook
+![win_counts](./images/win_lose_tie_by_month.png)
 
-For this project, you will be provided with a Jupyter notebook, `time-series/starter_notebook.ipynb`, containing some starter code. If you inspect the Zillow dataset file, you'll notice that the datetimes for each sale are the actual column names -- this is a format you probably haven't seen before. To ensure that you're not blocked by preprocessing, we've provided some helper functions to help simplify getting the data into the correct format. You're not required to use this notebook or keep it in its current format, but we strongly recommend you consider making use of the helper functions so you can spend your time working on the parts of the project that matter.
+If you look at May and June, it's evident that the first couple of months were a bit of a challenge, as the player lost more games than they won.  Over time, the rate of wins to losses varies somewhat, and the player will be able to think back on what changes they made throughout the course of time that led to improved win rates.
 
-#### Evaluation
+### K/D Over Time
 
-In addition to deciding which quantitative metric(s) you want to target (e.g. minimizing mean squared error), you need to start with a definition of "best investment".  Consider additional metrics like risk vs. profitability, or ROI yield.
+K/D is a very standard performance metric in first person shooter games. Simply put, it's the number of players you eliminate in a match divided by the number of times you are eliminated. K/D comes from "Kills / Deaths."
 
-### Problem 2: Recommendation System
+![kill_spread](./images/kd_over_time_trailing_12.png)
 
-If you choose the Recommendation System option, you will be making movie recommendations based on the [MovieLens](https://grouplens.org/datasets/movielens/latest/) dataset from the GroupLens research lab at the University of Minnesota.  Unless you are planning to run your analysis on a paid cloud platform, we recommend that you use the "small" dataset containing 100,000 user ratings (and potentially, only a particular subset of that dataset).
+This graph shows the trend for total kills in blue and the trend for total deaths in orange.  It's interesting to see that around March of 2021, the lines converge, representing a new trend of a K/D ratio greater than 1, which is a strong sign of improvement.
 
-Your task is to:
+Depicting the convergence of these trends communicates to a player that the time they spent in game has led to a quantifiable skill increase.  Even if a player never crosses the threshold of a K/D ratio greater than 1, a visual representation of improvement is encouraging and could lead to better retention over time.
 
-> Build a model that provides top 5 movie recommendations to a user, based on their ratings of other movies.
+![dragon](./images/kd_2021.png)
 
-The MovieLens dataset is a "classic" recommendation system dataset, that is used in numerous academic papers and machine learning proofs-of-concept.  You will need to create the specific details about how the user will provide their ratings of other movies, in addition to formulating a more specific business problem within the general context of "recommending movies".
+This graph uses the same data as the previous, but it shows rolling 30 day average as opposed to rolling 365 day average for year to date.  In the case of this player, changes to their controller inputs led to improved accuracy around February 2021.  
 
-#### Collaborative Filtering
+You'll notice an increase in the K/D ratio from February through April, which the player attributed to using a controller with paddles for easier input accessibility.  In May of 2021, that controller stopped working, and the player had to revert to a standard controller.  Despite the adjustment evident throughout May, the player eventually returned to the stronger K/D ratio.
 
-At minimum, your recommendation system must use collaborative filtering.  If you have time, consider implementing a hybrid approach, e.g. using collaborative filtering as the primary mechanism, but using content-based filtering to address the [cold start problem](https://en.wikipedia.org/wiki/Cold_start_(computing)).
+### Long Range Accuracy Over Time
 
-#### Evaluation
+![multicollinearity](./images/long_range_accuracy_over_time.png)
 
-The MovieLens dataset has explicit ratings, so achieving some sort of evaluation of your model is simple enough.  But you should give some thought to the question of metrics. Since the rankings are ordinal, we know we can treat this like a regression problem.  But when it comes to regression metrics there are several choices: RMSE, MAE, etc.  [Here](http://fastml.com/evaluating-recommender-systems/) are some further ideas.
+In this example, the player's long range accuracy is plotted using the 365 day rolling average.  The increase beginning in January of 2021 marks the time when the player understood the importance of long range combat, but the accuracy plateaued from March through April.  In May of 2021, a change in the player's aiming sensitivity setting allowed them to break through the plateau and continue improving in this metric.
 
-### Problem 3: Image Classification with Deep Learning
 
-If you choose this option, you'll put everything you've learned together to build a deep neural network that trains on a large dataset for classification on a non-trivial task.  In this case, using x-ray images of pediatric patients to identify whether or not they have pneumonia.  The dataset comes from Kermany et al. on [Mendeley](https://data.mendeley.com/datasets/rscbjbr9sj/3), although there is also a version on [Kaggle](https://www.kaggle.com/paultimothymooney/chest-xray-pneumonia) that may be easier to use.
 
-Your task is to:
+# Predicting Victory Using Machine Learning and Historical Player Metrics
 
-> Build a model that can classify whether a given patient has pneumonia, given a chest x-ray image.
+The second goal of this project was to determine how accurately victory could be predicted using only historical player data and match victory data.
 
-#### Aim for a Proof of Concept
+Multiple API calls were used to compile each line of data.  Here's a quick breakdown for how this was accomplished:
 
-With Deep Learning, data is king -- the more of it, the better. However, the goal of this project isn't to build the best model possible -- it's to demonstrate your understanding by building a model that works. You should try to avoid datasets and model architectures that won't run in reasonable time on your own machine. For many problems, this means downsampling your dataset and only training on a portion of it. Once you're absolutely sure that you've found the best possible architecture and other hyperparameters for your model, then consider training your model on your entire dataset overnight (or, as larger portion of the dataset that will still run in a feasible amount of time).
+- Using a list of 850 unique Xbox Live gamertags, 25 Match ID's and dates were pulled for each gamertag using the Player Match History API call
+- For each of the players 25 Match ID's, full match results were pulled from Match Result - Arena API call
+- Each match result was compiled into a single dataframe which included game mode, playlist, map, and whether the player won, lost, and a list of gamertag's on the player's team and on their opponent's team
+- From the single match dataframe, each player's historical performance by game mode was pulled using the Player Service Records - Arena API call
+- Each match was then compiled into a final dataframe before another function converted match results and historical player statistics into a single line of data, which was required for the machine learning models
+- Of the 17,143 matches compiled for the dataframe, 5,306 were used for the model after filtering for the 'Capture the Flag' game mode and the 'Super Fiesta Party' playlist
 
-At the end of the day, we want to see your thought process as you iterate and improve on a model. A project that achieves a lower level of accuracy but has clearly iterated on the model and the problem until it found the best possible approach is more impressive than a model with high accuracy that did no iteration. We're not just interested in seeing you finish a model -- we want to see that you understand it, and can use this knowledge to try and make it even better!
+## Models, Scalers, and Datasets
 
-#### Evaluation
+Many models, scalers, and variations of the modeling dataset were tested to find the optimal model for predicting victory using player statistics.  
 
-Evaluation is fairly straightforward for this project.  But you'll still need to think about which metric to use and about how best to cross-validate your results.
+**Models**:
 
-### Problem 4: Natural Language Processing (NLP)
+- Logistic Regression
+- Random Forests
+- Support Vector Machines
+- XGBoost
 
-If you choose this option, you'll build an NLP model to analyze Twitter sentiment about Apple and Google products. The dataset comes from CrowdFlower via [data.world](https://data.world/crowdflower/brands-and-product-emotions). Human raters rated the sentiment in over 9,000 Tweets as positive, negative, or neither.
+**Scalers**:
 
-Your task is to:
+- Standard Scaler
+- Robust Scaler
+- Power Transformer
 
-> Build a model that can rate the sentiment of a Tweet based on its content.
+**Datasets**:
 
-#### Aim for a Proof of Concept
+- <u>All player performance metrics broken out by individual players</u> (e.g. all metrics for each player represented individually)
+- <u>Total lifetime performance metrics</u> (e.g. total weapon damage, total shots landed, total melee damage for players 1, 2, 3, and 4 and opponents 1, 2, 3, and 4)
+- <u>Averaged performance metrics per game</u> (e.g. weapon damage per game, shots landed per game, melee damage per game players 1, 2, 3, and 4 and opponents 1, 2, 3, and 4))
+- <u>Total and averaged performance metrics condensed by team average</u> (e.g. player team total weapon damage, enemy team total weapon damage, etc)
 
-There are many approaches to NLP problems - start with something simple and iterate from there. For example, you could start by limiting your analysis to positive and negative Tweets only, allowing you to build a binary classifier. Then you could add in the neutral Tweets to build out a multiclass classifier. You may also consider using some of the more advanced NLP methods in the Mod 4 Appendix.
+# Best Model: Logistic Regression, Power Transformer, Averaged Per Game Performance Metrics by Team
 
-#### Evaluation
 
-Evaluating multiclass classifiers can be trickier than binary classifiers because there are multiple ways to mis-classify an observation, and some errors are more problematic than others. Use the business problem that your NLP project sets out to solve to inform your choice of evaluation metrics.
+After testing all the models, the best performance came from logistic regression using the power transformer and the averaged per game performance metrics by team.
 
-### Sourcing Your Own Data
+#### Performance
 
-Sourcing new data is a valuable skill for data scientists, but it requires a great deal of care. An inappropriate dataset or an unclear business problem can lead you spend a lot of time on a project that delivers underwhelming results. The guidelines below will help you complete a project that demonstrates your ability to engage in the full data science process.
+    Cross validation mean: 	72.29%
+    Training Accuracy: 		73.07%
+    Test Accuracy: 			72.73%
 
-Your dataset must be...
+              precision    recall  f1-score   support
 
-1. **Appropriate for one of this project's models.** These are time series, recommendation systems, deep learning, or natural language processing.   
+           0       0.69      0.65      0.67       673
+           1       0.75      0.79      0.77       926
 
-2. **Usable to solve a specific business problem.** This solution must rely on your model.
+    accuracy                           0.73      1599
+    macro avg       0.72     0.72      0.72      1599
+    weighted avg    0.73     0.73      0.73      1599
 
-3. **Somewhat complex.** It should contain thousands of rows and features that require creativity to use.
+![logistic](./images/best_model.png)
 
-4. **Unfamiliar.** It can't be one we've already worked with during the course or that is commonly used for demonstration purposes (e.g. MNIST).
+### Interpretation
 
-5. **Manageable.** Stick to datasets that you can model using the techniques introduced in Phase 4.
+The model is more precise at predicting victory over defeat, and this might be due to the fact that the matches compiled for the dataframe came from players that were fairly experienced in the Super Fiesta Party playlist.  In the future, it might be worth exploring matches from competitors with less play time and less experience in the playlist.
 
-Once you've sourced your own dataset and identified the business problem you want to solve with it, you must to **run them by your instructor for approval**.
+## Model Coefficients and Feature Importances
 
-#### Problem First, or Data First?
+Using our best model, let's take a look at the logistic regression coefficients to interpret feature importance.  The first 10 features on the bar graph below represent the features the model used to predict victory, and the bottom 10 represent the features used to predict defeat.
 
-There are two ways that you can source your own dataset: **_Problem First_** or **_Data First_**. The less time you have to complete the project, the more strongly we recommend a Data First approach to this project.
+![logistic](./images/feature_importances.png)
 
-**_Problem First_**: Start with a problem that you are interested in that you could potentially solve using one of the four project models. Then look for data that you could use to solve that problem. This approach is high-risk, high-reward: Very rewarding if you are able to solve a problem you are invested in, but frustrating if you end up sinking lots of time in without finding appropriate data. To mitigate the risk, set a firm limit for the amount of time you will allow yourself to look for data before moving on to the Data First approach.
+The player team's average win rate between the 4 teammates is the strongest predictor of victory.  Interestingly, player team's average shots landed per game is not a feature that was anticipated to have high predictive quality since it's only one piece of the accuracy feature, which measure shots landed per game divided by shots fired per game.  Total games won, total games completed, and total time played were also highly influential, and the importance of those features reflect the initial hypotheses before modeling was conducted.
 
-**_Data First_**: Take a look at some of the most popular internet repositories of cool data sets we've listed below. If you find a data set that's particularly interesting for you, then it's totally okay to build your problem around that data set.
 
-There are plenty of amazing places that you can get your data from. We recommend you start looking at data sets in some of these resources first:
 
-* [UCI Machine Learning Datasets Repository](https://archive.ics.uci.edu/ml/datasets.php)
-* [Kaggle Datasets](https://www.kaggle.com/datasets)
-* [Awesome Datasets Repo on Github](https://github.com/awesomedata/awesome-public-datasets)
 
-## The Deliverables
+# Conclusions and Recommendations
 
-There are three deliverables for this project:
+### Visualizations
+Visuals depicting historical performance and player growth aren't found in many major titles. After constructing some myself with my own data, I firmly believe that visuals like these are low hanging fruit for developers hoping to increase engagement and player retention.
 
-* A **GitHub repository**
-* A **Jupyter Notebook**
-* A **non-technical presentation**
+Exploring K/D improvement over time reaffirms many of the decisions I made while trying to become a better team player. There is a growing community of creaters on YouTube who specialize in skills, tactics, and controller setting optimization. The popularity of these channels is surely evidence that gamers do indeed care about becoming better players.
 
-Review the "Project Submission & Review" page in the "Milestones Instructions" topic for instructions on creating and submitting your deliverables. Refer to the rubric associated with this assignment for specifications describing high-quality deliverables.
+For example, providing a K/D ratio over time similar to the one I created here but with visual markers indicating controller setting changes, weapon loadout changes, or anything defined by the player could alleviate frustration caused by a sense of failure and defeat when first starting a game.
 
-### Key Points
+Playing devil's advocate, I will admit that providing increased transparency in performance could fuel the ire of this generation's anger with developers and might have the opposite effect.
 
-* **Choose your project quickly.** We've given you a lot of choices - don't get stuck spending too much time choosing which project to do. Give yourself a firm time limit for picking a project (e.g. 2 hours) so you can get on with making something great. Don't worry about picking the perfect project - remember that you will get to do a new, larger Capstone project very soon!
+I recmmend developers experiment with offering these tools to players. Properly framed, these visuals could increase satisfaction in more seasoned players and offer guidance to newer players.
 
-* **Your Jupyter Notebook should demonstrate an iterative approach to modeling.** This means that you begin with a basic model, evaluate it, and then provide justification for and proceed to a new model. This is a great way to add narrative structure to your notebook, especially if you compare model performance across each iteration.
+### Modeling
+For this specific playlist and with players who were most likely more skilled than average, we were able to predict the victor of a match with 72.73% accuracy using only information gathered by the API and no details about what actually occurred during the match.  
 
-* **You must choose and implement an appropriate validation strategy.** This is one of the trickiest parts of machine learning models, especially for models that don't lend themselves easily to traditional cross-validation (e.g. time series & recommendation systems).
+While I admittedly have no knowledge on best practices in ensuring a positive player experience, I believe an ideal matchmaking algorithm should not be predictable above a certain threshold, ideally not much higher than 50%.
 
-## Getting Started
+It is entirely possible that matchmaking algorithms are already optimized to meet this ideal standard.  Perhaps sourcing modeling data from more skilled players in a very specific playlist would naturally lead to a higher than desired predictive quality simply because there are not enough equally skilled players entering matchmaking to ensure an even match at various hours of the day.
 
-Create a new repository for your project to get started. We recommend structuring your project repository similar to the structure in [the Phase 1 Project Template](https://github.com/learn-co-curriculum/dsc-project-template). You can do this either by creating a new fork of that repository to work in or by building a new repository from scratch that mimics that structure.
+However, if that's not the case, a solution to uneven matchmaking might come in the form of a machine learning model as simple and efficient as logistic regression using readily available player data.  If something like this isn't being used, it could be implemented experimentally.
 
-## Project Submission and Review
+I should note that none of the modeling was conducted with ranked matchmaking, which certainly exists in Halo 5 and many other competitive games.  That system is likely more nuanced and robust, and deserves its own round of modeling and analysis.
 
-Review the "Project Submission & Review" page in the "Milestones Instructions" topic to learn how to submit your project and how it will be reviewed. Your project must pass review for you to progress to the next Phase.
 
-## Summary
+# Next Steps
 
-This project is your chance to show off your data science prowess with some advanced machine learning algorithms. Now that you've gone through all of the core course content, we're excited to see what you are able to do!
+### Visuals
+Conducting market research or simply raising the topic on social media or a game's subreddit would offer immediate insight into what players might like to know about their performance.  It would be important to develop an understanding of which visuals are fun and engaging and which visuals could potentially cause more frustration.  
+
+Additionally, on top of personal improvement metrics, there is an abundance of post-match data in Halo 5 that is currently going under-utilized.  Here are a few ideas that could be explored for enhancing the match report:
+- 2D / 3D heat maps depicting areas of high activity during the match
+- A one dimendsional bar depicting who was in the lead throughout the duration of the match
+- Sueprlative awards granted to each player (best long distance, most destruction, best accuracy, e tc.)
+
+### Modeling 
+Regarding the Super Fiesta Party playlist, where players spawn with random weapons throughout the match, there exists a 'Match Events' API call that details nearly every action that happened in any given match.  Most importantly, this provides information on what weapons players spawned with throughout the match.  Given the fact that the weapons are randomized, frequenters of Super Fiesta Party will (or should) freely admit that luck with the random weapons varies substantially.
+
+This project was originally concieved with this in mind, and the goal was to predict victory based on random weapon spawns alone.  The hurdle we encountered was that there was not a way to decode the +100 weapon variants.  343 Industries admitted in a forum post that adding this to the API would not be trivial, and given the API is technically a beta, they're under no obligation to give us this information.  However, it should be possible to decode the weapon variants through some individual data collection conducted through custom matches.
+
+Finally, we would like to exapnd our modeling dataset to a variety of skill levels and playlists, which will be possible by identifying players that meet this criteria.  It would certainly be worthwhile to determine whether or not ranked matchmaking has the same level of predictive quality.
+
+## For More Information
+
+See the full analysis in the [Jupyter Notebook](./Johnny Dryman - Phase 3 Project Notebook.ipynb) or review this [presentation](./Johnny Dryman - Phase 3 Project Presentation.pdf).
+
+For additional info, contact Johnny Dryman at [johnnydryman@gmail.com](mailto:johnnydryman@gmail.com)
+
+## Repository Structure
+
+```
+├── data
+├── images
+├── README.md
+├── Johnny Dryman - Phase 3 Project Presentation.pdf
+└── Johnny Dryman - Phase 3 Project Notebook.ipynb
+```
