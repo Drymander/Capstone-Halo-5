@@ -1,3 +1,6 @@
+### YOUR API KEY ###
+api_key = 'ceeaacb7cf024c7485e00ef8457e42dc'
+
 #Standard Packages
 import pandas as pd
 pd.set_option('display.max_columns', None)
@@ -17,7 +20,6 @@ def get_keys(path):
 import ast
 import time
 import http.client, urllib.request, urllib.parse, urllib.error, base64
-api_key = 'ceeaacb7cf024c7485e00ef8457e42dc'
 gamertag = 'Drymander'
 from tqdm import tqdm
 # !pip install isodate
@@ -48,11 +50,7 @@ def gamertag_for_api(gamertag):
     gamertag = gamertag.replace(' ','+')
     return gamertag
 
-# Testing the function
-# gamertag_for_api('this is a test')    
 
-# %%writefile 'pull_recent_match.py'
-api_key = 'ceeaacb7cf024c7485e00ef8457e42dc'
 # Function to pull most recent match stats into JSON format
 # Uses two separate API calls, one from player history and another from match details
 def pull_recent_match(how_recent, api_key=api_key, explore=False, gamertag='Drymander'):
@@ -111,11 +109,6 @@ def pull_recent_match(how_recent, api_key=api_key, explore=False, gamertag='Drym
     # Return match results as JSON
     return match_results
 
-# Show result
-# match_results = pull_recent_match(0, explore=False, gamertag='Drymander')
-# match_results
-
-# %%writefile 'build_base_dataframe.py'
 
 # Function to build the base dataframe for a single match
 # Designed to take in the JSON provided by the pull_recent_match function
@@ -203,12 +196,6 @@ def build_base_dataframe(match_results, gamertag):
     
     return df
 
-# df = build_base_dataframe(pull_recent_match(8), 'Drymander')
-
-# df
-
-
-# %%writefile 'get_player_list.py'
 
 # Function to combine all gamertags from the match and prepare them in string
 # format for the next API call
@@ -225,10 +212,6 @@ def get_player_list(df):
     # Return in one full string
     return player_list
 
-# get_player_list(df)
-
-
-# %%writefile 'get_player_history.py'
 
 # Function to pull more informative information about each player in the match
 # This information is not available in the two previous API calls
@@ -261,11 +244,6 @@ def get_player_history(df, readable=False):
     else:
         return data
 
-# Show result
-# player_history = get_player_history(df)
-# player_history
-
-# %%writefile 'build_history_dataframe.py'
 
 # Function to build secondary dataframe with more informative player stats
 def build_history_dataframe(player_history, variant_id, streamlit=False):
@@ -349,10 +327,6 @@ def build_history_dataframe(player_history, variant_id, streamlit=False):
     # Return the streamlit or modeling dataframe
     return vdf
     
-# build_history_dataframe(player_history, '1571fdac-e0b4-4ebc-a73a-6e13001b71d3', streamlit=False)
-
-
-# %%writefile 'decode_column.py'
 
 # This function will convert codes provided by the API into a readable format
 def decode_column(df, column, api_dict):
@@ -379,7 +353,6 @@ def decode_column(df, column, api_dict):
     # Return decoded list
     return decoded_list
 
-# %%writefile 'decode_maps.py'
 
 # This function will convert maps to readable format
 def decode_maps(df, column, api_dict):
@@ -446,44 +419,74 @@ def recent_match_stats(gamertag, back_count=0):
     
     return full_stats_df
 
-# Show full dataframe for match
-# df = recent_match_stats('Drymander', back_count=0)
-# df
+
+def compare_stat(df, column_name):
+    
+#     layout = go.Layout(
+#         margin=go.layout.Margin(
+#             l=100, #left margin
+#             r=0, #right margin
+#             b=0, #bottom margin
+#             t=0))  #top margin
+    
+    df = df.round(2)
+    # Separate player and enemy teams
+    df_player = df.loc[df['PlayerTeam'] == 'Player']
+    df_enemy = df.loc[df['PlayerTeam'] == 'Enemy']
+
+    # Sort total time played by descending
+    df_player = df_player.sort_values(by=[column_name])
+    df_enemy = df_enemy.sort_values(by=[column_name])
+
+    # Assign player / enemy colors
+    if df_player['TeamColor'].iloc[0] == 'Blue':
+        player_color = 'Blue'
+        enemy_color = 'Red'
+    else:
+        player_color = 'Red'
+        enemy_color = 'Blue'
+    
+    # Make subplot and X axis range
+    fig = make_subplots(rows=2, cols=1, subplot_titles=[f'Player Team - {column_name}', 
+                                                        f'Enemy Team - {column_name}'],
+                       vertical_spacing = 0.12)
+    x_range = df[column_name].max()
+    
+    # Player team sub plot
+    fig.add_trace(go.Bar(
+                x=df_player[column_name],
+                y=df_player['Gamertag'],
+                orientation='h',
+                text=df_player[column_name],
+                textposition='auto',
+                marker_color=player_color),
+                    row=1, col=1)
+    fig.update_xaxes(range=[0, x_range], row=1, col=1)
+    
+    # Enemy team sub plot
+    fig.add_trace(go.Bar(
+                x=df_enemy[column_name],
+                y=df_enemy['Gamertag'],
+                orientation='h',
+                text=df_enemy[column_name],
+                textposition='auto',
+                marker_color=enemy_color),
+                    row=2, col=1)
+    fig.update_xaxes(range=[0, x_range], row=2, col=1)
+    fig.update_yaxes(automargin=True)
+    fig['layout'].update(margin=dict(l=125,r=50,b=20,t=30))
+    fig['layout'].update(showlegend=False)
+#     fig.update_layout(title_text='test')
+    return fig
 
 
-from compare_stat import compare_stat
-
-################################################################################
-################################################################################
-################################################################################
-################################################################################
-################################################################################
-################################################################################
-################################################################################
 
 
-# from matplotlib.backends.backend_agg import RendererAgg
-
-
-######################################## Title
+######################################## Title and markdown
 st.title('Welcome to Halo 5 Last Match!')
-st.markdown('Halo 5 Last Match allows you to view much more in depth stats for players in a recent Halo 5 Arena match. Start by entering your gamertag below. The second box will allow you to specify how many matches back you would like to go in your match history.  ')
+st.markdown('Halo 5 Last Match allows you to view performance stats for players in a recent Halo 5 Arena match. Start by entering your gamertag below. The second box will allow you to specify how many matches back you would like to go in your match history.')
 
-# add_selectbox = st.sidebar.selectbox(
-#     "How would you like to be contacted?",
-#     ("Email", "Home phone", "Mobile phone")
-# )
-
-# sideb = st.sidebar
-# check1 = sideb.button("Main Stats")
-# textbyuser = st.text_input("Enter some text")
-# if check1:
-#     st.info("Code is analyzing your text.")
-
-# gamertag = st.sidebar.text_input("Type in your Gamertag", 'Drymander')
-# st.sidebar.header("How many matches would you like to go back?")
-# back_count = st.sidebar.text_input("Enter 0 for most recent match, 1 to go 1 match back, 2 to go 2 matches back, etc.", 0)
-
+######################################## Sidebar and buttons
 st.sidebar.title("Additional Stats")
 xp_stats = st.sidebar.button('XP / Time Played')
 win_loss_stats = st.sidebar.button('Total Wins / Losses')
@@ -501,7 +504,6 @@ shoulder_bash = st.sidebar.button('Shoulder Bash')
 
 
 ########################################### Input
-
 gamertag = st.text_input("Type in your Gamertag", 'Drymander')
 back_count = st.text_input("How many matches would you like to go back?  Enter 0 for most recent match, 1 to go 1 match back, 2 to go 2 matches back, etc.", 0)
 
@@ -509,10 +511,11 @@ st.markdown("Each stat is calculated by Game Base Variant (e.g. Slayer, Capture 
 
 st.markdown("You can also find additional stats on the sidebar.")
 
+########################################### Dataframe
 df = recent_match_stats(gamertag, back_count=back_count)
 # df = pd.read_csv('match.csv')
 
-####################################### Match modes, map, date
+####################################### Game type, playlist, map, win/lose/tie
 
 df_outcome = df.loc[df['Gamertag'] == gamertag]
 
@@ -534,8 +537,6 @@ st.subheader(f'Map - {map_name}')
 
 ######################################### Graphs
 
-gamebasevariantid = df['GameBaseVariantId'].iloc[0]
-
 def show_stat(column_name, df=df, gamebasevariantid=gamebasevariantid):
     st.header(f'{column_name} - {gamebasevariantid}')
     stat_plot = compare_stat(df, column_name)
@@ -548,23 +549,23 @@ if grenades:
     show_stat('TotalGrenadeKills')
     show_stat('TotalGrenadeDamage')
     
-if weapon_damage:
+elif weapon_damage:
     show_stat('WeaponDamagePerGame')
     show_stat('TotalWeaponDamage')
     show_stat('PowerWeaponDamagePerGame')
     show_stat('TotalPowerWeaponDamage')
 
-if power_weapon_kills:
+elif power_weapon_kills:
     show_stat('PowerWeaponKillsPerGame')
     show_stat('TotalPowerWeaponKills')
 
-if power_weapon_grabs:
+elif power_weapon_grabs:
     show_stat('PowerWeaponGrabsPerGame')
     show_stat('TotalPowerWeaponGrabs')
     show_stat('PowerWeaponPossessionTimePerGame')
     show_stat('TotalPowerWeaponPossessionTime')
     
-if kd_stats:
+elif kd_stats:
     show_stat('K/D')
     show_stat('KillsPerGame')
     show_stat('TotalKills')
@@ -573,7 +574,7 @@ if kd_stats:
     show_stat('AssistsPerGame')
     show_stat('TotalAssists')
     
-if accuracy_stats:
+elif accuracy_stats:
     show_stat('Accuracy')
     show_stat('HeadshotsPerGame')
     show_stat('TotalHeadshots')
@@ -582,34 +583,34 @@ if accuracy_stats:
     show_stat('TotalShotsLanded')
     show_stat('TotalShotsFired')
     
-if melee:
+elif melee:
     show_stat('MeleeKillsPerGame')
     show_stat('TotalMeleeKills')
     show_stat('MeleeDamagePerGame')
     show_stat('TotalMeleeDamage')
     
-if assassinations:
+elif assassinations:
     show_stat('AssassinationsPerGame')
     show_stat('TotalAssassinations')
 
-if ground_pound:
+elif ground_pound:
     show_stat('GroundPoundKillsPerGame')
     show_stat('TotalGroundPoundKills')
     show_stat('GroundPoundDamagePerGame')
     show_stat('TotalGroundPoundDamage')
 
-if shoulder_bash:
+elif shoulder_bash:
     show_stat('ShoulderBashKillsPerGame')
     show_stat('TotalShoulderBashKills')
     show_stat('ShoulderBashDamagePerGame')
     show_stat('TotalShoulderBashDamage')
     
-if xp_stats:
+elif xp_stats:
     show_stat('SpartanRank')
     show_stat('PrevTotalXP')
     show_stat('TotalTimePlayed')
 
-if win_loss_stats:
+elif win_loss_stats:
     show_stat('WinRate')
     show_stat('TotalGamesWon')
     show_stat('TotalGamesLost')
@@ -617,49 +618,6 @@ if win_loss_stats:
     show_stat('TotalGamesCompleted')
 
 else:
-
-    st.header(f'Total Hours Played - {gamebasevariantid}')
-    # st.subheader('Books Read')
-    totaltimeplayed = compare_stat(df, 'TotalTimePlayed')
-    st.plotly_chart(totaltimeplayed)
-
-    st.header(f'Win Rate - {gamebasevariantid}')
-    # st.subheader('Books Read')
-    winrate = compare_stat(df, 'WinRate')
-    st.plotly_chart(winrate)
-
-    st.header(f'K/D - {gamebasevariantid}')
-    # st.subheader('Books Read')
-    k_d = compare_stat(df, 'K/D')
-    st.plotly_chart(k_d)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    show_stat('WinRate')
+    show_stat('TotalTimePlayed')
+    show_stat('K/D')
