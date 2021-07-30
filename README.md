@@ -22,6 +22,14 @@ While we had all played Halo 5 for a short period when it first launched in 2015
 
 It just so happens that Halo 5 has a very robust API with far more information than I was able to tackle with this project.  Nevertheless, I knew that I would finally be able to answer some questions that my friends and I have had for months.
 
+## Web App
+
+Make sure to check out the web app I developed using Streamlit.  Part of the impetus for this project was the desire to see more in depth skill based statistics about my team and opponents after a match.  A link to the full web app will be posted here as soon as I'm approved for deployment by Streamlit.  The web app provides stats such as time played, win rate, accuracy, K/D, as well as some other fun ones like grenades, melees, etc.  Here's a quick look at the Win Rate graph, which I have been very telling in why I might have lost a match.
+
+![win_counts](./images/winrate.png)
+
+Also, feel free to check out the two blog posts I wrote on the subject of [pulling the data necessary for these graphs](https://johnnydryman.medium.com/halo-5-building-a-streamlit-app-to-get-more-info-on-your-competitors-part-1-407bb05aeb4) and [building the Streamlit app](https://johnnydryman.medium.com/halo-5-building-a-streamlit-app-to-get-more-info-on-your-competitors-part-2-df1994f0169c).
+
 # Business Problem
 
 343 Industries is on the verge of releasing Halo Infinite, likely the most anticipated game of the decade so far.  The stakes are very high, not just for 343, but also for the millenials that grew up with the game.
@@ -32,13 +40,7 @@ Further, I believe that by providing more information to the player could positi
 
 Finally, matchmaking is an integral part of any online multiplayer experience.  As a player it sometimes feels like there is a mismatch of talent between my team and our opponent's team.  Uneven matchmaking can lead to less positive player experiences, and through machine learning, I want to determine whether or not victory can be predicted using lifetime player statistics.  While we'll be maximizing for predictive quality, but ultimately, a game developer will want to predictive quality to be minimal.  The results of predicting victory knowing nothing about what actually occurred in any of the matches other than which team won match might yield interesting revelations on how to improve the matchmaking experience for players.
 
-## Web App
 
-Make sure to check out the web app I developed using Streamlit.  Part of the impetus for this project was the desire to see more in depth skill based statistics about my team and opponents after a match.  A link to the full web app will be posted here as soon as I'm approved for deployment by Streamlit.  The web app provides stats such as time played, win rate, accuracy, K/D, as well as some other fun ones like grenades, melees, etc.  Here's a quick look at the Win Rate graph, which I have been very telling in why I might have lost a match.
-
-![win_counts](./images/winrate.png)
-
-Also, feel free to check out the two blog posts I wrote on the subject of [pulling the data necessary for these graphs](https://johnnydryman.medium.com/halo-5-building-a-streamlit-app-to-get-more-info-on-your-competitors-part-1-407bb05aeb4) and [building the Streamlit app](https://johnnydryman.medium.com/halo-5-building-a-streamlit-app-to-get-more-info-on-your-competitors-part-2-df1994f0169c).
 
 ## Data
 
