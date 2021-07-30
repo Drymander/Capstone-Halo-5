@@ -38,7 +38,7 @@ Make sure to check out the web app I developed using Streamlit.  Part of the imp
 
 ![win_counts](./images/winrate.png)
 
-[I'm an inline-style link](https://www.google.com)
+Also, feel free to check out the two blog posts I wrote on the subject of [pulling the data necessary for these graphs](https://johnnydryman.medium.com/halo-5-building-a-streamlit-app-to-get-more-info-on-your-competitors-part-1-407bb05aeb4) and [building the Streamlit app](https://johnnydryman.medium.com/halo-5-building-a-streamlit-app-to-get-more-info-on-your-competitors-part-2-df1994f0169c).
 
 ## Data
 
