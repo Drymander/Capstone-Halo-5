@@ -32,6 +32,14 @@ Further, I believe that by providing more information to the player could positi
 
 Finally, matchmaking is an integral part of any online multiplayer experience.  As a player it sometimes feels like there is a mismatch of talent between my team and our opponent's team.  Uneven matchmaking can lead to less positive player experiences, and through machine learning, I want to determine whether or not victory can be predicted using lifetime player statistics.  While we'll be maximizing for predictive quality, but ultimately, a game developer will want to predictive quality to be minimal.  The results of predicting victory knowing nothing about what actually occurred in any of the matches other than which team won match might yield interesting revelations on how to improve the matchmaking experience for players.
 
+## Web App
+
+Make sure to check out the web app I developed using Streamlit.  Part of the impetus for this project was the desire to see more in depth skill based statistics about my team and opponents after a match.  A link to the full web app will be posted here as soon as I'm approved for deployment by Streamlit.  The web app provides stats such as time played, win rate, accuracy, K/D, as well as some other fun ones like grenades, melees, etc.  Here's a quick look at the Win Rate graph, which I have been very telling in why I might have lost a match.
+
+![win_counts](./images/winrate.png)
+
+[I'm an inline-style link](https://www.google.com)
+
 ## Data
 
 This data was sourced using the Halo Public API (Beta).  The API is a rich source of data containing information not only about individual players but also about extensive match results.  By combining multiple API calls, we were able to source data to create interesting visuals depicting a player's performance improvement throughout their history and to build machine learning models predicting the outcome of a match using only historical player information.
