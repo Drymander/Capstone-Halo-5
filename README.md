@@ -44,6 +44,33 @@ Also, feel free to check out the two blog posts I wrote on the subject of [pulli
 
 This data was sourced using the Halo Public API (Beta).  The API is a rich source of data containing information not only about individual players but also about extensive match results.  By combining multiple API calls, we were able to source data to create interesting visuals depicting a player's performance improvement throughout their history and to build machine learning models predicting the outcome of a match using only historical player information.
 
+## APIs Used
+
+#### [Player Match History API](https://developer.haloapi.com/docs/services/58acdf27e2f7f71ad0dad84b/operations/Halo-5-Player-Match-History?)
+
+First, we'll use this API to get a list of all Match ID's and all dates of matches that I have played.
+
+#### [Match Result: Arena API](https://developer.haloapi.com/docs/services/58acdf27e2f7f71ad0dad84b/operations/Halo-Wars-2-Match-Result?)
+
+Using the Match ID's, we will call the Match Result - Arena API for all matches returned in the Player Match History API.
+
+#### [Player Service Records: Arena API](https://developer.haloapi.com/docs/services/58acdf27e2f7f71ad0dad84b/operations/Halo-5-Player-Service-Records-Arena?)
+
+This will be used for the modeling portion.  It returns a list of dictionaries offering aggregate lifetime stats for each player requested broken down by game type.
+
+#### [Metadata - Game Base Variant API](https://developer.haloapi.com/docs/services/58ace18c21091812784ce8c5/operations/Halo-5-Game-Base-Variants?)
+
+To convert game base variant codes, we'll pull the metadata from the Game Base Variant API.
+
+#### [Metadata - Playlists API](https://developer.haloapi.com/docs/services/58ace18c21091812784ce8c5/operations/Halo-5-Playlists?)
+
+To convert playlist codes, we'll pull the metadata from the Playlists API.
+
+#### [Metadata - Map Variants API](https://developer.haloapi.com/docs/services/58ace18c21091812784ce8c5/operations/Halo-5-Map-Variant?)
+
+To convert map codes, we'll pull the metadata from the Map Variants API.
+
+
 ## Visualizations Depicting Player Performance
 
 ### Wins, Losses, and Ties by Month
@@ -90,6 +117,7 @@ Multiple API calls were used to compile each line of data.  Here's a quick break
 - From the single match dataframe, each player's historical performance by game mode was pulled using the Player Service Records - Arena API call
 - Each match was then compiled into a final dataframe before another function converted match results and historical player statistics into a single line of data, which was required for the machine learning models
 - Of the 17,143 matches compiled for the dataframe, 5,306 were used for the model after filtering for the 'Capture the Flag' game mode and the 'Super Fiesta Party' playlist
+
 
 ## Models, Scalers, and Datasets
 
