@@ -1,7 +1,5 @@
 absl-py==0.10.0
-aiohttp @ file:///D:/bld/aiohttp_1603223723068/work
 altair==4.1.0
-argon2-cffi @ file:///D:/bld/argon2-cffi_1605217273648/work
 arviz @ file:///home/conda/feedstock_root/build_artifacts/arviz_1600909298598/work
 astor==0.8.1
 astunparse==1.6.3
@@ -22,77 +20,36 @@ brotlipy==0.7.0
 bz2file==0.98
 cachetools @ file:///home/conda/feedstock_root/build_artifacts/cachetools_1593420445823/work
 certifi==2021.5.30
-cffi @ file:///D:/bld/cffi_1602537433319/work
-cftime @ file:///D:/bld/cftime_1602504633284/work
-chardet @ file:///D:/bld/chardet_1602255508636/work
 click==7.1.2
 colorama==0.4.3
 convertdate @ file:///home/conda/feedstock_root/build_artifacts/convertdate_1599424212002/work
-cryptography @ file:///D:/bld/cryptography_1602614277640/work
-cvxpy @ file:///D:/bld/cvxpy_1602097673698/work
 cycler==0.10.0
-Cython @ file:///D:/bld/cython_1610096183531/work
 decorator==4.4.2
 defusedxml==0.6.0
-docutils @ file:///D:/bld/docutils_1620114472035/work
-ecos @ file:///D:/bld/ecos_1610612013520/work
 entrypoints @ file:///home/conda/feedstock_root/build_artifacts/entrypoints_1605121927639/work/dist/entrypoints-0.3-py2.py3-none-any.whl
-ephem @ file:///D:/bld/ephem_1602326724695/work
 et-xmlfile==1.0.1
-fbprophet @ file:///D:/bld/fbprophet_1599365958928/work
 folium @ file:///home/conda/feedstock_root/build_artifacts/folium_1588861378954/work
-future @ file:///D:/bld/future_1610147454374/work
 gast==0.3.3
-gensim @ file:///D:/bld/gensim_1617197057477/work
 gitdb==4.0.7
 GitPython==3.1.18
-google-api-core @ file:///C:/ci/google-api-core-split_1601302612440/work
-google-auth @ file:///home/conda/feedstock_root/build_artifacts/google-auth_1601485373217/work
-google-auth-oauthlib==0.4.1
-google-cloud-core @ file:///home/conda/feedstock_root/build_artifacts/google-cloud-core_1602093568796/work
-google-cloud-storage @ file:///home/conda/feedstock_root/build_artifacts/google-cloud-storage_1601484581504/work
-google-crc32c @ file:///D:/bld/google-crc32c_1602546733709/work
-google-pasta==0.2.0
-google-resumable-media @ file:///home/conda/feedstock_root/build_artifacts/google-resumable-media_1602011069843/work
-googleapis-common-protos @ file:///D:/bld/googleapis-common-protos-feedstock_1604414944715/work
-grpcio @ file:///D:/bld/grpcio_1596715902639/work
 h5py==2.10.0
 holidays @ file:///home/conda/feedstock_root/build_artifacts/holidays_1595448845196/work
 idna @ file:///home/conda/feedstock_root/build_artifacts/idna_1593328102638/work
 imbalanced-learn @ file:///home/conda/feedstock_root/build_artifacts/imbalanced-learn_1592145894352/work
 importlib-metadata @ file:///home/conda/feedstock_root/build_artifacts/importlib-metadata_1602263269022/work
-ipykernel @ file:///D:/bld/ipykernel_1602683005810/work/dist/ipykernel-5.3.4-py3-none-any.whl
-ipython @ file:///D:/bld/ipython_1602640698269/work
 ipython-genutils==0.2.0
 ipywidgets @ file:///home/conda/feedstock_root/build_artifacts/ipywidgets_1599554010055/work
 isodate==0.6.0
 jdcal==1.4.1
-jedi @ file:///D:/bld/jedi_1605054817163/work
 Jinja2==2.11.2
 jmespath @ file:///home/conda/feedstock_root/build_artifacts/jmespath_1589369830981/work
 joblib @ file:///home/conda/feedstock_root/build_artifacts/joblib_1601671685479/work
 jsonschema @ file:///home/conda/feedstock_root/build_artifacts/jsonschema_1614815863336/work
-jupyter @ file:///D:/bld/jupyter_1611872058257/work
-jupyter-client @ file:///home/conda/feedstock_root/build_artifacts/jupyter_client_1598486169312/work
-jupyter-console @ file:///home/conda/feedstock_root/build_artifacts/jupyter_console_1598728807792/work
-jupyter-contrib-core==0.3.3
-jupyter-contrib-nbextensions @ file:///home/conda/feedstock_root/build_artifacts/jupyter_contrib_nbextensions_1614931162960/work
-jupyter-core @ file:///D:/bld/jupyter_core_1605128008091/work
-jupyter-highlight-selected-word @ file:///D:/bld/jupyter_highlight_selected_word_1611341154347/work
-jupyter-latex-envs @ file:///home/conda/feedstock_root/build_artifacts/jupyter_latex_envs_1614852190293/work
-jupyter-nbextensions-configurator @ file:///D:/bld/jupyter_nbextensions_configurator_1611341297787/work
-jupyterlab-pygments @ file:///home/conda/feedstock_root/build_artifacts/jupyterlab_pygments_1601375948261/work
-jupyterthemes==0.20.0
-Keras==2.4.3
-Keras-Preprocessing==1.1.2
-kiwisolver @ file:///D:/bld/kiwisolver_1602517369422/work
-korean-lunar-calendar @ file:///home/conda/feedstock_root/build_artifacts/korean_lunar_calendar_1589354365811/work
 lesscpy==0.15.0
 LunarCalendar==0.0.9
 lxml @ file:///D:/bld/lxml_1603105115271/work
 lz4 @ file:///C:/ci/lz4_1619516660854/work
 Markdown==3.3.2
-MarkupSafe @ file:///D:/bld/markupsafe_1610127683324/work
 matplotlib @ file:///D:/bld/matplotlib-base_1597952524659/work
 mistune @ file:///D:/bld/mistune_1624941477207/work
 mkl-fft==1.2.0
