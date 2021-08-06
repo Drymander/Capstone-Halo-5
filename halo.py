@@ -251,7 +251,7 @@ def build_history_dataframe(player_history, variant_id, streamlit=False):
     # Option to view 'streamlit' dataframe, which includes pertinent
     # information but excludes all stats for modeling
     if streamlit == True:
-        vdf_columns = ['Gamertag','TotalTimePlayed','K/D','Accuracy','WinRate']
+        vdf_columns = ['Gamertag','TotalTimePlayed','K/D','Accuracy','WinPercent']
         vdf = pd.DataFrame(columns = vdf_columns)
     else:
         stat_list = ['Gamertag', 'TotalKills', 'TotalHeadshots', 'TotalWeaponDamage', 'TotalShotsFired',
@@ -283,7 +283,7 @@ def build_history_dataframe(player_history, variant_id, streamlit=False):
             variant_dic['TotalTimePlayed']= isodate.parse_duration(variant_stats['TotalTimePlayed']).total_seconds() / 3600
             variant_dic['K/D'] = variant_stats['TotalKills'] / variant_stats['TotalDeaths']
             variant_dic['Accuracy'] = variant_stats['TotalShotsLanded'] / variant_stats['TotalShotsFired']
-            variant_dic['WinRate'] = variant_stats['TotalGamesWon'] / variant_stats['TotalGamesLost']
+            variant_dic['WinPercent'] = (variant_stats['TotalGamesWon'] / variant_stats['TotalGamesCompleted']) * 100
             vdf = vdf.append(variant_dic, True)
             i += 1
         
@@ -293,7 +293,7 @@ def build_history_dataframe(player_history, variant_id, streamlit=False):
             variant_dic['TotalTimePlayed']= isodate.parse_duration(variant_stats['TotalTimePlayed']).total_seconds() / 3600
             variant_dic['K/D'] = variant_stats['TotalKills'] / variant_stats['TotalDeaths']
             variant_dic['Accuracy'] = variant_stats['TotalShotsLanded'] / variant_stats['TotalShotsFired']
-            variant_dic['WinRate'] = variant_stats['TotalGamesWon'] / variant_stats['TotalGamesLost']
+            variant_dic['WinPercent'] = (variant_stats['TotalGamesWon'] / variant_stats['TotalGamesCompleted']) * 100
             
             # Loop that appends all stats to variant dic
             for stat in stat_list[1:]:    
@@ -611,13 +611,13 @@ elif xp_stats:
     show_stat('TotalTimePlayed')
 
 elif win_loss_stats:
-    show_stat('WinRate')
+    show_stat('WinPercent')
     show_stat('TotalGamesWon')
     show_stat('TotalGamesLost')
     show_stat('TotalGamesTied')
     show_stat('TotalGamesCompleted')
 
 else:
-    show_stat('WinRate')
+    show_stat('WinPercent')
     show_stat('TotalTimePlayed')
     show_stat('K/D')
