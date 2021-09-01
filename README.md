@@ -19,9 +19,9 @@ While we had all played Halo 5 for a short period when it first launched in 2015
 
 It just so happens that Halo 5 has a very robust API with far more information than I was able to tackle with this project.  Nevertheless, I knew that I would finally be able to answer some questions that my friends and I have had for months.
 
-## Web App
+## [Web App](https://share.streamlit.io/drymander/capstone-halo-5/main/halo.py)
 
-Make sure to check out the web app I developed using Streamlit.  Part of the impetus for this project was the desire to see more in depth skill based statistics about my team and opponents after a match.  A link to the full web app will be posted here as soon as I'm approved for deployment by Streamlit.  The web app provides stats such as time played, win rate, accuracy, K/D, as well as some other fun ones like grenades, melees, etc.  Here's a quick look at the Win Rate graph, which I have been very telling in why I might have lost a match.
+Make sure to check out the [web app I developed using Streamlit](https://share.streamlit.io/drymander/capstone-halo-5/main/halo.py).  Part of the impetus for this project was the desire to see more in depth skill based statistics about my team and opponents after a match.  A link to the full web app will be posted here as soon as I'm approved for deployment by Streamlit.  The web app provides stats such as time played, win rate, accuracy, K/D, as well as some other fun ones like grenades, melees, etc.  Here's a quick look at the Win Rate graph, which I have been very telling in why I might have lost a match.
 
 ![win_counts](./images/winrate.png)
 
