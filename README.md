@@ -223,7 +223,7 @@ Finally, we would like to exapnd our modeling dataset to a variety of skill leve
 
 ## For More Information
 
-See the full analysis in the [Jupyter Notebook]('Johnny Dryman - Phase 3 Project Notebook.ipynb') or review this [presentation]('Johnny Dryman - Phase 3 Project Presentation.pdf').
+See the full analysis in the [EDA Notebook](https://github.com/Drymander/Halo-5-Visualizaing-Skill-and-Predicting-Match-Outcomes/blob/main/1.%20EDA%20Notebook.ipynb) and [Modeling Notebook](https://github.com/Drymander/Halo-5-Visualizaing-Skill-and-Predicting-Match-Outcomes/blob/main/2.%20Model%20Notebook.ipynb), or review this [presentation](https://github.com/Drymander/Halo-5-Visualizaing-Skill-and-Predicting-Match-Outcomes/blob/main/Johnny%20Dryman%20-%20Capstone%20Presentation.pdf).
 
 For additional info, contact Johnny Dryman at [johnnydryman@gmail.com](mailto:johnnydryman@gmail.com)
 
