@@ -1,7 +1,4 @@
-
-  
-  
- # Halo 5 - Recommendations for Improved Player Experience through Data Visualization and Machine Learning
+# Halo 5 - Recommendations for Improved Player Experience through Data Visualization and Machine Learning
 
 **Author**: [Johnny Dryman](mailto:johnnydryman@gmail.com)
 
@@ -226,7 +223,7 @@ Finally, we would like to exapnd our modeling dataset to a variety of skill leve
 
 ## For More Information
 
-See the full analysis in the [Jupyter Notebook](./Johnny Dryman - Phase 3 Project Notebook.ipynb) or review this [presentation](./Johnny Dryman - Phase 3 Project Presentation.pdf).
+See the full analysis in the [Jupyter Notebook](Johnny Dryman - Phase 3 Project Notebook.ipynb) or review this [presentation](Johnny Dryman - Phase 3 Project Presentation.pdf).
 
 For additional info, contact Johnny Dryman at [johnnydryman@gmail.com](mailto:johnnydryman@gmail.com)
 
